@@ -1,9 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -14,13 +25,16 @@ function App() {
             <>
               <nav className="navbar">
                 <div className="logo">Tribu</div>
-                <div className="nav-links">
-                  <a href="#features">Features</a>
-                  <a href="#about">About</a>
-                  <a href="#contact">Contact</a>
+                <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+                  {isMobileMenuOpen ? '✕' : '☰'}
+                </button>
+                <div className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+                  <a href="#features" onClick={closeMobileMenu}>Features</a>
+                  <a href="#about" onClick={closeMobileMenu}>About</a>
+                  <a href="#contact" onClick={closeMobileMenu}>Contact</a>
                   <div className="auth-buttons">
-                    <Link to="/login" className="nav-button login">Login</Link>
-                    <Link to="/signup" className="nav-button signup">Sign Up</Link>
+                    <Link to="/login" className="nav-button login" onClick={closeMobileMenu}>Login</Link>
+                    <Link to="/signup" className="nav-button signup" onClick={closeMobileMenu}>Sign Up</Link>
                   </div>
                 </div>
               </nav>
